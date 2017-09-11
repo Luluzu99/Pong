@@ -25,7 +25,14 @@ void setup(){
   //ball stats
   ballx = 400;
   bally = 300;
-  ball_velocityx = -4;
+  
+  //ball_velocityx rng
+  ball_velocityx = random(1);
+  if(ball_velocityx < 0.5){
+   ball_velocityx = -4; 
+  }else{
+   ball_velocityx = 4; 
+  }
   ball_velocityy = 0;
   
   //player points
@@ -61,27 +68,27 @@ void draw(){
   rect(400, 300, 2, 600);
   
   //goal visual 
-  rect(400, goaly + 40, 10, 5);
-  rect(400, goaly - 40, 10, 5);
+  rect(400, goaly + 40, 10, 6);
+  rect(400, goaly - 40, 10, 6);
   
   //movement
   if(keyPressed){
-    if(keyCode == DOWN){
+    if(keyCode == CONTROL){
       if(playery < 550){
         playery = playery + 5;
       }
     }
-    if(keyCode == UP){
+    if(keyCode == SHIFT){
       if(playery > 50){
         playery = playery - 5;
       }
     }
-    if(keyCode == CONTROL){
+    if(keyCode == DOWN){
       if(player2y < 550){
        player2y = player2y + 5;
       }
     }
-    if(keyCode == SHIFT){
+    if(keyCode == UP){
       if(player2y > 50){
         player2y = player2y - 5;
       }
@@ -98,12 +105,17 @@ void draw(){
       ball_velocityx = -ball_velocityx;
       ball_velocityy = ball_velocityy - (playery - bally) * 0.1;
   }else{
-    //resetting
-    ballx = 400;
-    bally = 300;
-    ball_velocityx = -3;
-    ball_velocityy = 0;
-    player1pt = 0;
+      //miss penalty
+      if(ballx < 10){
+        ball_velocityx = -ball_velocityx;
+        player1pt = 0;
+          if(goal_velocityy > 0){
+           goal_velocityy = 1.5;
+          }
+          if(goal_velocityy < 0){
+           goal_velocityy = -1.5; 
+          }
+      }
     }
   }
   
@@ -113,25 +125,63 @@ void draw(){
       ball_velocityx = -ball_velocityx;
       ball_velocityy = ball_velocityy - (player2y - bally) * 0.1;
     }else{
-    //resetting
-    ballx = 400;
-    bally = 300;
-    ball_velocityx = -3;
-    ball_velocityy = 0;
-    player2pt = 0;
+      //miss penalty
+      if(ballx > 790){
+        ball_velocityx = -ball_velocityx;
+        player2pt = 0;
+          if(goal_velocityy > 0){
+           goal_velocityy = 1.5;
+          }
+          if(goal_velocityy < 0){
+           goal_velocityy = -1.5; 
+          }
+      }
     }
   }
   
   //goal middle hitreg
   if(ballx == 400){
     if(bally > (goaly - 40) && bally < (goaly + 40)){
+      
+      //goalcounter
       if(ball_velocityx > 0){
        player1pt = player1pt + 1;
       }
       if(ball_velocityx < 0){
        player2pt = player2pt + 1;
       }
+      
+      //goal speedup per hit
+      if(goal_velocityy < 0){
+        goal_velocityy = goal_velocityy - 0.2;
+      }
+      if(goal_velocityy > 0){
+        goal_velocityy = goal_velocityy + 0.2;
+      }
     }
+  }
+  
+  //goalposts (left & right)
+  if(ballx == 392 || ballx == 408){
+   if((bally < (goaly + 48) && bally > (goaly + 32)) || (bally > (goaly - 48) && bally < (goaly - 32))){
+     ball_velocityx = -ball_velocityx;
+   }
+  }
+  
+  //goalposts (outside)
+  if(ballx < 410 && ballx > 390){
+   if((bally < (goaly + 48) && bally > (goaly + 40)) || (bally > (goaly - 48) && bally < (goaly - 40))){
+     ball_velocityy = -ball_velocityy;
+     ball_velocityy = ball_velocityy + goal_velocityy;
+   }
+  }
+  
+  //goalposts (inside)
+  if(ballx < 410 && ballx >390){
+   if((bally < (goaly + 40) && bally > (goaly + 32)) || (bally > (goaly - 40) && bally < (goaly - 32))) {
+    ball_velocityy = -ball_velocityy;
+    ball_velocityy = ball_velocityy + goal_velocityy;
+   }
   }
   
   //keeping the ball on the field
