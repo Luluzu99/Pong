@@ -13,6 +13,10 @@ float player2x;
 float player2y;
 float goaly;
 float goal_velocityy;
+boolean up1;
+boolean down1;
+boolean up2;
+boolean down2;
 
 //is applied once in the very beginning
 void setup(){
@@ -57,13 +61,15 @@ void setup(){
 
 //makes the things within the brackets run indefinitely
 void draw(){
+  playermovement();
+  playerrestriction();
   
   //is within the loop so the object doesn't leave a trail
-  background(0);
+  background(0, 200, 0);
   
   //rect(x, y, width, height)
   rect(playerx, playery, 20, 100);
-  rect(ballx, bally, 10, 10);
+  ellipse(ballx, bally, 10, 10);
   rect(player2x, player2y, 20, 100);
   rect(400, 300, 2, 600);
   
@@ -71,29 +77,7 @@ void draw(){
   rect(400, goaly + 40, 10, 6);
   rect(400, goaly - 40, 10, 6);
   
-  //movement
-  if(keyPressed){
-    if(keyCode == CONTROL){
-      if(playery < 550){
-        playery = playery + 5;
-      }
-    }
-    if(keyCode == SHIFT){
-      if(playery > 50){
-        playery = playery - 5;
-      }
-    }
-    if(keyCode == DOWN){
-      if(player2y < 550){
-       player2y = player2y + 5;
-      }
-    }
-    if(keyCode == UP){
-      if(player2y > 50){
-        player2y = player2y - 5;
-      }
-    }
-  }
+
   //ball movement
   ballx = ballx + ball_velocityx;
   bally = bally + ball_velocityy;
@@ -204,3 +188,65 @@ void draw(){
   text("Goals: " + player1pt, 100, 20);
   text("Goals: " + player2pt, 700, 20);
 }
+void playermovement() {
+  if(up1){
+    playery = playery - 5;
+  }
+  if(down1){
+   playery  = playery + 5;
+  }
+  if(up2){
+    player2y = player2y - 5;
+  }
+  if(down2){
+   player2y = player2y + 5;
+  }
+}
+
+  //movement 2.0
+ void keyPressed() {
+  if(keyCode == SHIFT){
+    up1 = true;
+  }
+  if(keyCode == CONTROL){
+    down1 = true; 
+  }
+ 
+
+    if(keyCode == UP){
+    up2 = true;
+  }
+  if(keyCode == DOWN){
+    down2 = true; 
+  }
+ }
+ 
+ void keyReleased() {
+     if(keyCode == SHIFT){
+    up1 = false;
+  }
+  if(keyCode == CONTROL){
+    down1 = false; 
+  }
+    if(keyCode == UP){
+    up2 = false;
+  }
+  if(keyCode == DOWN){
+    down2 = false; 
+  }
+ }
+ 
+ void playerrestriction(){
+   if(playery < 50){
+    playery = playery + 5;
+   }
+   if(playery > 550){
+    playery = playery - 5;
+   }
+   if(player2y < 50){
+    player2y = player2y + 5;
+   }
+   if(player2y > 550){
+    player2y = player2y - 5;
+   }
+ }
