@@ -68,15 +68,15 @@ void draw(){
   background(0, 200, 0);
   
   //rect(x, y, width, height)
-  rect(playerx, playery, 20, 100);
+  player1();
+  player2();  
+  fill(255, 255, 255);
   ellipse(ballx, bally, 10, 10);
-  rect(player2x, player2y, 20, 100);
   rect(400, 300, 2, 600);
   
   //goal visual 
   rect(400, goaly + 40, 10, 6);
   rect(400, goaly - 40, 10, 6);
-  
 
   //ball movement
   ballx = ballx + ball_velocityx;
@@ -93,6 +93,7 @@ void draw(){
       if(ballx < 10){
         ball_velocityx = -ball_velocityx;
         player1pt = 0;
+        ball_velocityy = 0;
           if(goal_velocityy > 0){
            goal_velocityy = 1.5;
           }
@@ -113,6 +114,7 @@ void draw(){
       if(ballx > 790){
         ball_velocityx = -ball_velocityx;
         player2pt = 0;
+        ball_velocityy = 0;
           if(goal_velocityy > 0){
            goal_velocityy = 1.5;
           }
@@ -249,4 +251,15 @@ void playermovement() {
    if(player2y > 550){
     player2y = player2y - 5;
    }
+ }
+ 
+ //Player color
+ void player1(){
+  fill(255, 0, 0);
+  rect(playerx, playery, 20, 100); 
+ }
+ 
+ void player2(){
+  fill(0, 0, 255);
+  rect(player2x, player2y, 20, 100); 
  }
