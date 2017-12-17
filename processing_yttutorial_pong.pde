@@ -32,6 +32,8 @@ void draw(){
   //rect(x, y, height, width)
   rect(playerx, playery, 20, 100);
   rect(ballx, bally, 10, 10);
+  
+  //player movement
   if(keyPressed){
     if(keyCode == DOWN){
       if(playery < 550){
@@ -44,9 +46,12 @@ void draw(){
       }
     }
   }
+  
+  //ball movement
   ballx = ballx + ball_velocityx;
   bally = bally + ball_velocityy;
   
+  //ball bounce player
   if(ballx < 30){
     if(bally < (playery + 55) && bally > (playery - 55)){
       ball_velocityx = (-ball_velocityx) + 0.5;
@@ -62,7 +67,7 @@ void draw(){
     }
   }
   
-  //keeping the ball on the field
+  //ball restriction
   if(bally > 595){
     ball_velocityy = -ball_velocityy;
   }

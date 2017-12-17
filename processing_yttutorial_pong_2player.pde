@@ -1,6 +1,6 @@
 //The Game
 
-//variables always at the beginning
+//variables2p
 float playerx;
 float playery;
 float ballx;
@@ -22,39 +22,42 @@ void setup(){
   round = 0;
   player2x = 790;
   player2y = 300;
+  
   size(800, 600);
     //rectMode(CENTER) centers point of orientation of the rectangle (from top left corner to the middle)
    rectMode(CENTER);
 }
 
-//makes the game things within the brackets run indefinitely
+//makes the things within the brackets run indefinitely
 void draw(){
   
   //is within the loop so the object doesn't leave a trail
   background(0);
   
-  //rect(x, y, height, width)
+  //rect2p(x, y, height, width)
   rect(playerx, playery, 20, 100);
   rect(ballx, bally, 10, 10);
   rect(player2x, player2y, 20, 100);
+  
+  //player movement 2p
   if(keyPressed){
-    if(keyCode == DOWN){
+    if(keyCode == CONTROL){
       if(playery < 550){
         playery = playery + 5;
       }
     }
-    if(keyCode == UP){
+    if(keyCode == SHIFT){
       if(playery > 50){
         playery = playery - 5;
       }
     }
-    if(keyCode == CONTROL){
+    if(keyCode == DOWN){
       if(player2y < 550){
        player2y = player2y + 5;
       }
     }
-    if(keyCode == SHIFT){
-      if(playery > 50){
+    if(keyCode == UP){
+      if(player2y > 50){
         player2y = player2y - 5;
       }
     }
@@ -62,6 +65,7 @@ void draw(){
   ballx = ballx + ball_velocityx;
   bally = bally + ball_velocityy;
   
+  //ball bounce player1
   if(ballx < 30){
     if(bally < (playery + 55) && bally > (playery - 55)){
       ball_velocityx = (-ball_velocityx) + 0.25;
@@ -77,6 +81,7 @@ void draw(){
     }
   }
   
+  //ball bounce player2
   if(ballx > 770){
     if(bally < (player2y + 55) && bally > (player2y - 55)){
       ball_velocityx = (-ball_velocityx) - 0.25;
