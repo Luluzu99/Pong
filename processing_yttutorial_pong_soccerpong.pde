@@ -65,7 +65,7 @@ void draw(){
   playerrestriction();
   
   //is within the loop so the object doesn't leave a trail
-  background(0, 200, 0);
+  background(0, 100, 50);
   
   //rect(x, y, width, height)
   player1();
